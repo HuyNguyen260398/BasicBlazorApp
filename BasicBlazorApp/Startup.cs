@@ -19,6 +19,8 @@ using Twilio;
 using BasicBlazorApp.Services;
 using BasicBlazorApp.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Twilio.Http;
+using System.Net.Http;
 
 namespace BasicBlazorApp
 {
@@ -77,6 +79,12 @@ namespace BasicBlazorApp
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
             services.AddSingleton<WeatherForecastService>();
+
+            // HTTP Client service for interact with reqres api
+            services.AddScoped<System.Net.Http.HttpClient>(s =>
+            {
+                return new System.Net.Http.HttpClient { BaseAddress = new Uri(@"https://reqres.in/") };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
